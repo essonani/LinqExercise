@@ -21,31 +21,63 @@ namespace LinqExercise
              */
 
             //TODO: Print the Sum of numbers
+            Console.WriteLine("Sum of numbers");
+            int Sum =numbers.Sum();
+            Console.WriteLine(Sum);
 
             //TODO: Print the Average of numbers
-
+            Console.WriteLine("average of numbers");
+            Console.WriteLine(numbers.Average());
             //TODO: Order numbers in ascending order and print to the console
-
+            Console.WriteLine("numbers in ascending order");
+            numbers.OrderBy(x => x).ToList().ForEach(x => Console.WriteLine(x));
             //TODO: Order numbers in descending order and print to the console
-
+            Console.WriteLine("numbers in descending order");
+            var orderByDescent=numbers.OrderByDescending(x => x);
+            foreach(var number in orderByDescent)
+            {
+                Console.WriteLine(number);
+            }
             //TODO: Print to the console only the numbers greater than 6
-
+            Console.WriteLine("numbers greater than 6");
+            numbers.Where(x=>x >6).ToList().ForEach(x=> Console.WriteLine(x));
             //TODO: Order numbers in any order (ascending or desc) but only print 4 of them **foreach loop only!**
-
+            Console.WriteLine("print 4 number");
+            var print4=numbers.OrderBy(x=>x).Take(4);
+            foreach(var number in print4)
+            {
+                Console.WriteLine(number);
+            }
             //TODO: Change the value at index 4 to your age, then print the numbers in descending order
-
+            Console.WriteLine("changing the value of index 4 to 33");
+            numbers.SetValue(21, 4);
+            foreach (var nnumber in orderByDescent)
+            {
+                Console.WriteLine(nnumber);
+            }
             // List of employees ****Do not remove this****
-            var employees = CreateEmployees();
-
+            List< Employee> employees= CreateEmployees();
+            Console.WriteLine("employee name that start with s or c");
+            employees.Where(x=>x.FirstName.StartsWith("C")||x.FirstName.StartsWith("S")).OrderBy(x=>x.FirstName).ToList().ForEach(x=>Console.WriteLine(x.FullName));
             //TODO: Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S and order this in ascending order by FirstName.
-
+            Console.WriteLine("employee over 26 years old");
+            employees.Where(x=>x.Age>26).OrderBy(x=>x.Age).ThenBy(x=>x.FirstName).ToList().ForEach(x=>Console.WriteLine($"FullName:{x.FullName}Age:{x.Age}"));
             //TODO: Print all the employees' FullName and Age who are over the age 26 to the console and order this by Age first and then by FirstName in the same result.
 
             //TODO: Print the Sum and then the Average of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
-
+            Console.WriteLine("Sum of year of  exp");
+            int employeeSum = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35).Sum(x => x.YearsOfExperience);
+            Console.WriteLine(employeeSum);
             //TODO: Add an employee to the end of the list without using employees.Add()
-
-
+            Console.WriteLine("average yoe");
+            double emplyeeAvg= employees.Where(x=>x.YearsOfExperience<=10 && x.Age >35).Average(x=>x.YearsOfExperience);
+            Console.WriteLine(emplyeeAvg);
+            Employee newemployee=new Employee();
+            newemployee.FirstName = "Mike";
+            newemployee.LastName = "v";
+            newemployee.YearsOfExperience = 10;
+            newemployee.Age = 40;
+            employees.Append(newemployee).ToList().ForEach(x=> Console.WriteLine(x.FullName));
             Console.WriteLine();
 
             Console.ReadLine();
@@ -55,6 +87,7 @@ namespace LinqExercise
         private static List<Employee> CreateEmployees()
         {
             List<Employee> employees = new List<Employee>();
+
             employees.Add(new Employee("Cruz", "Sanchez", 25, 10));
             employees.Add(new Employee("Steven", "Bustamento", 56, 5));
             employees.Add(new Employee("Micheal", "Doyle", 36, 8));
